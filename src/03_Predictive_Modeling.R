@@ -30,7 +30,7 @@ Total_Con.classifier.plt <- ggplot(data = house, mapping = aes(x = Total_Con, y 
   scale_x_continuous(limits = c(0, 5000000))
 print(Total_Con.classifier.plt)
 
-ggsave("../pictures/Simple_Logistic_1d.png", Total_Con.classifier.plt, height = 10, width = 8)
+ggsave("../pictures/Simple_Logistic_1d.png", Total_Con.classifier.plt, height = 4, width = 5)
 
 
 # Simple 2d Logistic Model
@@ -54,7 +54,7 @@ simple.logistic.plt <- ggplot(data = house)+
   scale_x_continuous(limits = c(0, 5000000)) +
   scale_y_continuous(limits = c(0, 5000000))
 print(simple.logistic.plt)
-ggsave("../pictures/Simple_Logistic_2d.png", simple.logistic.plt, height = 10, width = 8)
+ggsave("../pictures/Simple_Logistic_2d.png", simple.logistic.plt, height = 4, width = 5)
 
 
 

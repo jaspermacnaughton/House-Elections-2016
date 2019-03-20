@@ -26,7 +26,7 @@ modeling_house <- mutate(modeling_house, Winner_Prediction=as.factor(final.model
 final.model.true.plt <- ggplot(data = modeling_house) +
   geom_point(mapping = aes(x=Operating_Exp, y=Net_Con, color=Winner)) +
   #facet_wrap(~Seat_Status, ncol = 2)+
-  labs(title = "True Election Results Over Two Predictors", x = "Operating Expenditures", y = "Net Contributions") +
+  labs(title = "True Election Results", x = "Operating Expenditures", y = "Net Contributions") +
   scale_x_continuous(limits = c(0, 5000000)) +
   scale_y_continuous(limits = c(0, 5000000)) +
   theme(legend.position = "bottom") +
@@ -34,12 +34,12 @@ final.model.true.plt <- ggplot(data = modeling_house) +
                         breaks=c(1, 0),
                         labels=c("Election Win", "Election Loss"))
 print(final.model.true.plt)
-ggsave("../pictures/final_model_true.png", final.model.true.plt, height = 8, width = 8)
+ggsave("../pictures/final_model_true.png", final.model.true.plt, height = 4, width = 4.3)
 
 final.model.pred.plt <- ggplot(data = modeling_house) +
   geom_point(mapping = aes(x=Operating_Exp, y=Net_Con, color=Winner_Prediction)) +
   #facet_wrap(~Seat_Status, ncol = 2)+
-  labs(title = "Radial Basis Kernel SVM Prediction Results Over Two Predictors", x = "Operating Expenditures", y = "Net Contributions") +
+  labs(title = "Final Model Predictions", x = "Operating Expenditures", y = "Net Contributions") +
   scale_x_continuous(limits = c(0, 5000000)) +
   scale_y_continuous(limits = c(0, 5000000)) +
   theme(legend.position = "bottom") +
@@ -47,7 +47,7 @@ final.model.pred.plt <- ggplot(data = modeling_house) +
                         breaks=c(1, 0),
                         labels=c("Predicted Win", "Predicted Loss"))
 print(final.model.pred.plt)
-ggsave("../pictures/final_model_pred.png", final.model.pred.plt, height = 8, width = 8)
+ggsave("../pictures/final_model_pred.png", final.model.pred.plt, height = 4, width = 4.3)
 
 final.model.err.plt <- ggplot(data = modeling_house) +
   geom_point(mapping = aes(x=Operating_Exp, y=Net_Con, color=Accurate, shape = Winner_Prediction)) +
@@ -58,9 +58,10 @@ final.model.err.plt <- ggplot(data = modeling_house) +
   #scale_x_continuous(trans = "log10") +
   #scale_y_continuous(trans = "log10") +
   scale_shape_manual(name = "Prediction", breaks=c(1, 0), labels=c("Predicted Win", "Predicted Loss"), values = c(1, 8)) +
-  scale_colour_discrete(name ="Prediction Accuracy", breaks=c(TRUE, FALSE), labels=c("Correct Prediction", "Incorrect Prediction"))
+  scale_colour_discrete(name ="Prediction Accuracy", breaks=c(TRUE, FALSE), labels=c("Correct Prediction", "Incorrect Prediction")) +
+  theme(legend.position = "bottom", legend.box = "horizontal", legend.direction = "vertical")
 print(final.model.err.plt)
-ggsave("../pictures/final_model_err.png", final.model.err.plt, height = 10, width = 12)
+ggsave("../pictures/final_model_err.png", final.model.err.plt, height = 6, width = 6)
 
 
 final.model.sv.plt <- ggplot(data = modeling_house[final.model$index,]) +
@@ -120,9 +121,11 @@ mean.pred_plt <- ggplot(data = mean.df)+
   #facet_grid(Party ~ Seat_Status) +
   labs(title = "Model Predictions with respect to Net Contributions", subtitle = "Other Variables held constant at their means", x = "Net Contributions", y = "Predicted Win Probability") +
   scale_x_continuous(limits = c(0, 1000000), breaks = seq(0, 1000000, 500000), labels = c("$0","Half Mil", "$1 M")) +
-  scale_color_manual(values=c("blue", "gray50", "red"))
+  #scale_color_manual(values=c("blue", "gray50", "red")) +
+  scale_colour_manual(name ="Party", breaks=c("DEM", "Other", "REP"), labels=c("Democrat", "Other", "Republican"), values=c("blue", "gray50", "red")) +
+  theme(legend.position = "bottom")
 print(mean.pred_plt)
-ggsave("../pictures/final_model_predicted_values.png", mean.pred_plt, height = 4, width = 12)
+ggsave("../pictures/final_model_predicted_values.png", mean.pred_plt, height = 4, width = 9)
 
 mean.pred_plt_party <- ggplot(data = mean.df)+
   geom_point(mapping = aes(x = Net_Con, y = win.pred.probs.df$Win_Probability, color = Seat_Status)) +
@@ -130,9 +133,11 @@ mean.pred_plt_party <- ggplot(data = mean.df)+
   #facet_grid(Party ~ Seat_Status) +
   labs(title = "Model Predictions with respect to Net Contributions", subtitle = "Other Variables held constant at their means", x = "Net Contributions", y = "Predicted Win Probability") +
   scale_x_continuous(limits = c(0, 1000000), breaks = seq(0, 1000000, 500000), labels = c("$0","Half Mil", "$1 M")) +
-  scale_color_manual(values=c("red", "blue", "darkgreen"))
+ # scale_color_manual(values=c("red", "blue", "darkgreen"))
+  scale_colour_manual(name ="Seat Status", breaks=c("INCUMBENT", "OPEN", "CHALLENGER"), labels=c("Incumbent", "Open", "Challenger"), values=c("red", "blue", "darkgreen")) +
+  theme(legend.position = "bottom")
 print(mean.pred_plt_party)
-ggsave("../pictures/final_model_predicted_values_party.png", mean.pred_plt_party, height = 4, width = 12)
+ggsave("../pictures/final_model_predicted_values_party.png", mean.pred_plt_party, height = 4, width = 9)
 
 # PCA Attempt
 #supportVector_indices <- final.model$index

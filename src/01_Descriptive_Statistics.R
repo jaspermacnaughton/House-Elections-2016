@@ -82,7 +82,7 @@ ggsave("../pictures/NetCon_vs_Operating_Seat_Status.png", netcon_v_operating_Sta
 scatter_plt <- ggpairs(select_if(house,is.numeric)) +
   ggtitle("Pair Correlations of House Race Numerical Attributes")
 print(scatter_plt)
-ggsave("../pictures/Cross_Correlations.png", scatter_plt, height = 10, width = 8)
+ggsave("../pictures/Cross_Correlations_Small.png", scatter_plt, height = 6, width = 6)
 
 
 # Just Examine Differences by Party
